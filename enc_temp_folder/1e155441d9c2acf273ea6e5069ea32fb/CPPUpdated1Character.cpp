@@ -65,9 +65,6 @@ void ACPPUpdated1Character::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACPPUpdated1Character::Look);
-
-		//Interaction
-		EnhancedInputComponent->BindAction(Interact, ETriggerEvent::Triggered, this, &ACPPUpdated1Character::Interaction);
 	}
 	else
 	{
@@ -91,11 +88,6 @@ void ACPPUpdated1Character::Look(const FInputActionValue& Value)
 
 	// route the input
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
-}
-
-void ACPPUpdated1Character::Interaction(const FInputActionValue& Value)
-{
-	DoInteraction();
 }
 
 void ACPPUpdated1Character::DoMove(float Right, float Forward)
@@ -139,10 +131,3 @@ void ACPPUpdated1Character::DoJumpEnd()
 	// signal the character to stop jumping
 	StopJumping();
 }
-
-void ACPPUpdated1Character::DoInteraction()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Fire Event Interaction")));
-	UE_LOG(LogCPPUpdated1, Error, TEXT("Are you there?"));
-}
-

@@ -49,9 +49,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
-	UPROPERTY(EditAnywhere, Category = "Input")
-	UInputAction* Interact;
-
 public:
 
 	/** Constructor */
@@ -70,8 +67,6 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-	void Interaction(const FInputActionValue& Value);
-
 public:
 
 	/** Handles move inputs from either controls or UI interfaces */
@@ -89,9 +84,6 @@ public:
 	/** Handles jump pressed inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	virtual void DoInteraction();
 
 public:
 
