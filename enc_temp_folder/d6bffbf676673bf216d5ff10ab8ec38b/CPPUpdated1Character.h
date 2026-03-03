@@ -93,8 +93,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	virtual void DoInteraction();
 
-
-
 public:
 
 	/** Returns CameraBoom subobject **/
