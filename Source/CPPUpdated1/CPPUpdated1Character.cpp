@@ -143,34 +143,46 @@ void ACPPUpdated1Character::DoJumpEnd()
 void ACPPUpdated1Character::DoInteraction()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Fire Event Interaction")));
-	UE_LOG(LogCPPUpdated1, Error, TEXT("Are you there?"));
+	UE_LOG(LogCPPUpdated1, Error, TEXT("Start Line Trace"));
+
+	// Promps the objects hit, player, and collision, and what to ignore. 
 	FHitResult HitResult;
 	FVector PlayerLocation = GetActorLocation();
-	FVector PlayerForward = GetActorForwardVector();
-	FVector PlayerStartTrace = ((PlayerForward * 50.0f) + PlayerLocation);
-	FVector PlayerEndTrace = ((PlayerForward * 500.0f) + PlayerLocation);
 	FCollisionQueryParams CollisionParams;
 	CollisionParams.AddIgnoredActor(this->GetOwner());
 
-	//Draw Front Face Line Trace
-	DrawDebugLine(GetWorld(), PlayerStartTrace, PlayerEndTrace, FColor::Green, false, 2.0f);
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, PlayerStartTrace, PlayerEndTrace, ECC_WorldStatic, CollisionParams))
+	// Forward Vector
+	FVector PlayerForward = GetActorForwardVector();
+	FVector PlayerForwardStartTrace = ((PlayerForward * 50.0f) + PlayerLocation);
+	FVector PlayerForwardEndTrace = ((PlayerForward * 500.0f) + PlayerLocation);
+	
+	//Draw Forward Face Line Trace
+	DrawDebugLine(GetWorld(), PlayerForwardStartTrace, PlayerForwardEndTrace, FColor::Green, false, 2.0f);
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, PlayerForwardStartTrace, PlayerForwardEndTrace, ECC_WorldStatic, CollisionParams))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Object has been hit: %s"), *HitResult.GetActor()->GetName()));
 	}
-	//Draw Up face Line Trace
+	// UP Vector
 	FVector PlayerUpwards = GetActorUpVector();
-	FVector PlayerUpStartTrace = ((PlayerUpwards * 50.0f) + PlayerLocation);
+	FVector PlayerUpStartTrace = ((PlayerUpwards * 100.0f) + PlayerLocation);
 	FVector PlayerUpEndTrace = ((PlayerUpwards * 500.0f) + PlayerLocation);
 
+	//Draw Upwards Face Line Trace
 	DrawDebugLine(GetWorld(), PlayerUpStartTrace, PlayerUpEndTrace, FColor::Blue, false, 2.0f);
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, PlayerUpStartTrace, PlayerUpEndTrace, ECC_WorldStatic, CollisionParams))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::Printf(TEXT("Object has been hit: %s"), *HitResult.GetActor()->GetName()));
 	}
-	//Output Dot
-	FVector DotProduct = PlayerEndTrace * PlayerUpEndTrace;
+	// Calculate Dot Product
+	FVector DotProduct = PlayerForwardEndTrace * PlayerUpEndTrace;
 	DotProduct.Normalize();
+	// Output Dot Product
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Dot Product: %s"), *DotProduct.ToString()));
+
+	FVector ResultCrossProduct = FVector::CrossProduct(PlayerForwardStartTrace, PlayerUpEndTrace);
+	ResultCrossProduct.Normalize();
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Cross Product: %s"), *ResultCrossProduct.ToString()));
+
+	
 }
 
