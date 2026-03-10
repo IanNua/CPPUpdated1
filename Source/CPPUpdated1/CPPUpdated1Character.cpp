@@ -179,8 +179,10 @@ void ACPPUpdated1Character::DoInteraction()
 	// Output Dot Product
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Dot Product: %s"), *DotProduct.ToString()));
 
+	//Calculated the Cross Product of the objects
 	FVector ResultCrossProduct = FVector::CrossProduct(PlayerForwardStartTrace, PlayerUpEndTrace);
 	ResultCrossProduct.Normalize();
+	// Outputs the Cross Product
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Cross Product: %s"), *ResultCrossProduct.ToString()));
 
 	
